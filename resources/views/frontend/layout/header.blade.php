@@ -1,9 +1,3 @@
-{{-- ============================================
-     HEADER — SORIBA SARL
-     Navigation premium avec glassmorphism
-     Palette: Bleu sombre, Bleu clair, Blanc, Jaune
-============================================ --}}
-
 <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
 
     {{-- Barre supérieure --}}
@@ -43,16 +37,19 @@
 
                 {{-- Navigation Desktop --}}
                 <div class="hidden lg:flex items-center gap-8">
-                    <a href="/" class="nav-link text-gray-300 text-sm hover:text-amber-500 transition-colors duration-300 relative group tracking-wide">
+                    <a href="{{ route('welcome') }}" class="nav-link text-gray-300 text-sm hover:text-amber-500 transition-colors duration-300 relative group tracking-wide">
                         Accueil
                         <span class="absolute -bottom-1 left-0 w-0 h-px bg-amber-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="/a-propos" class="nav-link text-gray-300 text-sm hover:text-amber-500 transition-colors duration-300 relative group tracking-wide">
+                    <a href="{{ route('about') }}" class="nav-link text-gray-300 text-sm hover:text-amber-500 transition-colors duration-300 relative group tracking-wide">
                         À propos
                         <span class="absolute -bottom-1 left-0 w-0 h-px bg-amber-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
 
                     {{-- Dropdown Services --}}
+                    @php
+                    $navServices = App\Models\Service::where('actif', true)->orderBy('ordre')->get();
+                    @endphp
                     <div class="relative group">
                         <button class="nav-link text-gray-300 text-sm hover:text-amber-500 transition-colors duration-300 relative flex items-center gap-1.5 tracking-wide">
                             Services
@@ -61,34 +58,28 @@
                             </svg>
                         </button>
                         <div class="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-72 bg-dark-blue border border-amber-500/20 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 py-2 z-20">
-                            @php
-                            $services = [
-                                ['label' => 'Énergie & Ressources'],
-                                ['label' => 'Infrastructures'],
-                                ['label' => 'Agriculture'],
-                                ['label' => 'Santé & Médical'],
-                                ['label' => 'Éducation & Sport'],
-                                ['label' => 'Digital & Logistique'],
-                            ];
-                            @endphp
-                            @foreach($services as $s)
-                            <a href="/services" class="flex items-center gap-3 px-5 py-2.5 text-sm text-gray-400 hover:text-amber-500 hover:bg-white/5 transition-all duration-200">
+                            <a href="{{ route('services') }}" class="flex items-center gap-3 px-5 py-2.5 text-sm text-amber-500 hover:bg-white/5 transition-all duration-200 border-b border-white/10 mb-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                                <span class="font-semibold">Tous les services</span>
+                            </a>
+                            @foreach($navServices as $s)
+                            <a href="{{ route('services.show', $s->slug) }}" class="flex items-center gap-3 px-5 py-2.5 text-sm text-gray-400 hover:text-amber-500 hover:bg-white/5 transition-all duration-200">
                                 <span class="w-1.5 h-1.5 rounded-full bg-amber-500/50"></span>
-                                <span>{{ $s['label'] }}</span>
+                                <span>{{ $s->title }}</span>
                             </a>
                             @endforeach
                         </div>
                     </div>
 
-                    <a href="/projets" class="nav-link text-gray-300 text-sm hover:text-amber-500 transition-colors duration-300 relative group tracking-wide">
+                    <a href="{{ route('projects.index') }}" class="nav-link text-gray-300 text-sm hover:text-amber-500 transition-colors duration-300 relative group tracking-wide">
                         Projets
                         <span class="absolute -bottom-1 left-0 w-0 h-px bg-amber-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="/experts" class="nav-link text-gray-300 text-sm hover:text-amber-500 transition-colors duration-300 relative group tracking-wide">
+                    <a href="{{ route('experts.index') }}" class="nav-link text-gray-300 text-sm hover:text-amber-500 transition-colors duration-300 relative group tracking-wide">
                         Experts
                         <span class="absolute -bottom-1 left-0 w-0 h-px bg-amber-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="/blog" class="nav-link text-gray-300 text-sm hover:text-amber-500 transition-colors duration-300 relative group tracking-wide">
+                    <a href="{{ route('blog.index') }}" class="nav-link text-gray-300 text-sm hover:text-amber-500 transition-colors duration-300 relative group tracking-wide">
                         Blog
                         <span class="absolute -bottom-1 left-0 w-0 h-px bg-amber-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
@@ -96,10 +87,10 @@
 
                 {{-- CTA Desktop --}}
                 <div class="hidden lg:flex items-center gap-4">
-                    <a href="/contact" class="px-5 py-2.5 border border-amber-500 text-amber-500 text-xs font-semibold rounded-full hover:bg-amber-500/10 transition-all duration-300 tracking-wide">
+                    <a href="{{ route('contact') }}" class="px-5 py-2.5 border border-amber-500 text-amber-500 text-xs font-semibold rounded-full hover:bg-amber-500/10 transition-all duration-300 tracking-wide">
                         Contact
                     </a>
-                    <a href="/partenaires" class="px-5 py-2.5 bg-amber-500 text-dark-blue text-xs font-semibold rounded-full hover:bg-amber-400 transition-all duration-300 flex items-center gap-2 tracking-wide">
+                    <a href="{{ route('partners') }}" class="px-5 py-2.5 bg-amber-500 text-dark-blue text-xs font-semibold rounded-full hover:bg-amber-400 transition-all duration-300 flex items-center gap-2 tracking-wide">
                         Partenariat
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -122,12 +113,8 @@
 
 {{-- MENU MOBILE DRAWER --}}
 <div id="mobile-menu" class="fixed inset-0 z-40 invisible" aria-hidden="true">
-    {{-- Overlay --}}
     <div id="mobile-overlay" class="absolute inset-0 bg-dark-blue/90 opacity-0 transition-opacity duration-400" onclick="closeMobileMenu()"></div>
-
-    {{-- Drawer --}}
     <div id="mobile-drawer" class="absolute top-0 right-0 bottom-0 w-80 max-w-full bg-dark-blue border-l border-amber-500/20 transform translate-x-full transition-transform duration-500 ease-out flex flex-col">
-        {{-- Header Drawer --}}
         <div class="flex items-center justify-between p-6 border-b border-white/10">
             <div class="font-display text-xl font-bold text-amber-500">SORIBA SARL</div>
             <button onclick="closeMobileMenu()" class="p-2 text-gray-400 hover:text-amber-500 transition-colors">
@@ -136,136 +123,95 @@
                 </svg>
             </button>
         </div>
-
-        {{-- Nav Links Mobile --}}
         <nav class="flex-1 overflow-y-auto p-6">
             <div class="flex flex-col gap-1">
-                @php
-                $mobileLinks = [
-                    ['href' => '/', 'label' => 'Accueil'],
-                    ['href' => '/about', 'label' => 'À propos'],
-                    ['href' => '/services', 'label' => 'Services'],
-                    ['href' => '/projects', 'label' => 'Projets'],
-                    ['href' => '/experts', 'label' => 'Experts'],
-                    ['href' => '/blog', 'label' => 'Blog'],
-                    ['href' => '/contact', 'label' => 'Contact'],
-                ];
-                @endphp
-                @foreach($mobileLinks as $i => $link)
-                <a href="{{ $link['href'] }}"
-                   class="mobile-nav-item flex items-center justify-between py-4 px-3 border-b border-white/5 text-gray-300 hover:text-amber-500 transition-all duration-300 text-base tracking-wide"
-                   style="animation-delay: {{ $i * 0.05 }}s">
-                    {{ $link['label'] }}
-                    <svg class="w-4 h-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                    </svg>
+                <a href="{{ route('welcome') }}" class="mobile-nav-item flex items-center justify-between py-4 px-3 border-b border-white/5 text-gray-300 hover:text-amber-500 transition-all duration-300 text-base tracking-wide">
+                    Accueil
+                    <svg class="w-4 h-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+                <a href="{{ route('about') }}" class="mobile-nav-item flex items-center justify-between py-4 px-3 border-b border-white/5 text-gray-300 hover:text-amber-500 transition-all duration-300 text-base tracking-wide" style="animation-delay:0.05s">
+                    À propos
+                    <svg class="w-4 h-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+                <a href="{{ route('services') }}" class="mobile-nav-item flex items-center justify-between py-4 px-3 border-b border-white/5 text-gray-300 hover:text-amber-500 transition-all duration-300 text-base tracking-wide" style="animation-delay:0.1s">
+                    Services
+                    <svg class="w-4 h-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+                {{-- Services sous-menu mobile --}}
+                @foreach($navServices as $s)
+                <a href="{{ route('services.show', $s->slug) }}" class="mobile-nav-item flex items-center gap-3 py-3 px-6 border-b border-white/5 text-gray-500 hover:text-amber-500 transition-all duration-300 text-sm" style="animation-delay:0.12s">
+                    <span class="w-1 h-1 rounded-full bg-amber-500/50"></span>
+                    {{ $s->title }}
                 </a>
                 @endforeach
+                <a href="{{ route('projects.index') }}" class="mobile-nav-item flex items-center justify-between py-4 px-3 border-b border-white/5 text-gray-300 hover:text-amber-500 transition-all duration-300 text-base tracking-wide" style="animation-delay:0.15s">
+                    Projets
+                    <svg class="w-4 h-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+                <a href="{{ route('experts.index') }}" class="mobile-nav-item flex items-center justify-between py-4 px-3 border-b border-white/5 text-gray-300 hover:text-amber-500 transition-all duration-300 text-base tracking-wide" style="animation-delay:0.2s">
+                    Experts
+                    <svg class="w-4 h-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+                <a href="{{ route('blog.index') }}" class="mobile-nav-item flex items-center justify-between py-4 px-3 border-b border-white/5 text-gray-300 hover:text-amber-500 transition-all duration-300 text-base tracking-wide" style="animation-delay:0.25s">
+                    Blog
+                    <svg class="w-4 h-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+                <a href="{{ route('contact') }}" class="mobile-nav-item flex items-center justify-between py-4 px-3 border-b border-white/5 text-gray-300 hover:text-amber-500 transition-all duration-300 text-base tracking-wide" style="animation-delay:0.3s">
+                    Contact
+                    <svg class="w-4 h-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
             </div>
         </nav>
-
-        {{-- Footer Drawer --}}
         <div class="p-6 border-t border-white/10">
-            <a href="/contact" class="w-full bg-amber-500 text-dark-blue font-semibold py-3 rounded-full flex items-center justify-center gap-2 text-sm hover:bg-amber-400 transition-all duration-300">
+            <a href="{{ route('partners') }}" class="w-full bg-amber-500 text-dark-blue font-semibold py-3 rounded-full flex items-center justify-center gap-2 text-sm hover:bg-amber-400 transition-all duration-300">
                 Initier un partenariat
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                 </svg>
             </a>
             <div class="mt-4 text-center">
-                <a href="tel:+221781792510" class="text-gray-400 text-sm hover:text-amber-500 transition-colors">
-                    +221 78 179 25 10
-                </a>
+                <a href="tel:+221781792510" class="text-gray-400 text-sm hover:text-amber-500 transition-colors">+221 78 179 25 10</a>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-    /* Header scroll effect */
     #main-header.scrolled #nav-bg {
         background: rgba(10,25,47,0.95);
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
         border-bottom: 1px solid rgba(245,197,24,0.15);
     }
-    #main-header.scrolled #topbar { 
-        opacity: 0;
-        visibility: hidden;
+    #main-header.scrolled #topbar {
+        opacity: 0; visibility: hidden;
         transform: translateY(-100%);
-        height: 0;
-        padding: 0;
-        overflow: hidden;
+        height: 0; padding: 0; overflow: hidden;
     }
-
-    /* Mobile menu base styles */
     #mobile-menu { transition: visibility 0.3s ease; }
     #mobile-menu.open { visibility: visible; }
     #mobile-menu.open #mobile-overlay { opacity: 1; transition: opacity 0.3s ease; }
-    #mobile-menu.open #mobile-drawer { transform: translateX(0); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-
-    /* Mobile menu items animation */
-    .mobile-nav-item {
-        opacity: 0;
-        transform: translateX(20px);
-        animation: slideInMobile 0.4s forwards;
-    }
-    @keyframes slideInMobile {
-        to { opacity: 1; transform: translateX(0); }
-    }
-
-    /* Pulse animation */
-    @keyframes pulse {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.5; transform: scale(1.2); }
-    }
-    .animate-pulse {
-        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-        #main-header { 
-            background: rgba(10,25,47,0.95); 
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
+    #mobile-menu.open #mobile-drawer { transform: translateX(0); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); }
+    .mobile-nav-item { opacity:0; transform:translateX(20px); animation: slideInMobile 0.4s forwards; }
+    @keyframes slideInMobile { to { opacity:1; transform:translateX(0); } }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.2)} }
+    .animate-pulse { animation: pulse 2s cubic-bezier(0.4,0,0.6,1) infinite; }
+    @media (max-width:1024px) {
+        #main-header { background:rgba(10,25,47,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); }
     }
 </style>
 
 <script>
-    // Mobile menu
     const menuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
-    
-    function openMobileMenu() {
-        mobileMenu.classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-    
-    function closeMobileMenu() {
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
-    }
-    
-    if (menuBtn) {
-        menuBtn.addEventListener('click', openMobileMenu);
-    }
-
-    // Header scroll effect
+    function openMobileMenu() { mobileMenu.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeMobileMenu() { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; }
+    if (menuBtn) menuBtn.addEventListener('click', openMobileMenu);
     const header = document.getElementById('main-header');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
+        header.classList.toggle('scrolled', window.scrollY > 50);
     }, { passive: true });
-
-    // Fermer le menu avec la touche Echap
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
-            closeMobileMenu();
-        }
+        if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMobileMenu();
     });
 </script>

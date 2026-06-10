@@ -1,15 +1,7 @@
-{{-- ============================================
-     FOOTER — SORIBA SARL
-     Design identique à la page Experts
-     Palette: Bleu sombre, Bleu clair, Blanc, Jaune
-============================================ --}}
-
 <footer class="bg-dark-blue border-t border-amber-500/20">
 
-    {{-- Bande gold supérieure --}}
     <div class="h-px bg-gradient-to-r from-transparent via-amber-500 to-transparent"></div>
 
-    {{-- Contenu principal --}}
     <div class="max-w-[1440px] mx-auto px-6 lg:px-12 py-16">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
 
@@ -20,49 +12,36 @@
                     Catalyseur de partenariats stratégiques pour le développement durable de l'Afrique.
                 </p>
                 <div class="w-10 h-px bg-amber-500 my-6"></div>
-                {{-- Réseaux sociaux --}}
                 <div class="flex items-center gap-3">
-                    @php
-                    $socials = [
-                        ['icon' => 'linkedin', 'href' => '#', 'title' => 'LinkedIn'],
-                        ['icon' => 'twitter', 'href' => '#', 'title' => 'Twitter / X'],
-                        ['icon' => 'facebook', 'href' => '#', 'title' => 'Facebook'],
-                    ];
-                    @endphp
-                    @foreach($socials as $s)
-                    <a href="{{ $s['href'] }}" title="{{ $s['title'] }}"
-                       class="w-9 h-9 rounded-full border border-gray-600 flex items-center justify-center text-gray-400 hover:border-amber-500 hover:text-amber-500 transition-all duration-300">
-                        @if($s['icon'] === 'linkedin')
+                    <a href="#" title="LinkedIn" class="w-9 h-9 rounded-full border border-gray-600 flex items-center justify-center text-gray-400 hover:border-amber-500 hover:text-amber-500 transition-all duration-300">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                         </svg>
-                        @elseif($s['icon'] === 'twitter')
+                    </a>
+                    <a href="#" title="TikTok" class="w-9 h-9 rounded-full border border-gray-600 flex items-center justify-center text-gray-400 hover:border-amber-500 hover:text-amber-500 transition-all duration-300">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 15.64a6.34 6.34 0 0 0 10.86 4.27 6.33 6.33 0 0 0 1.93-4.53V7.33a7.62 7.62 0 0 0 4.05 1.2V5.44a4.83 4.83 0 0 1-2.25 1.25z"/>
                         </svg>
-                        @else
+                    </a>
+                    <a href="#" title="Facebook" class="w-9 h-9 rounded-full border border-gray-600 flex items-center justify-center text-gray-400 hover:border-amber-500 hover:text-amber-500 transition-all duration-300">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                         </svg>
-                        @endif
                     </a>
-                    @endforeach
                 </div>
             </div>
 
-            {{-- Colonne 2 : Services --}}
+            {{-- Colonne 2 : Services (dynamique depuis la base) --}}
             <div>
                 <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Domaines d'activité</h4>
                 <div class="w-8 h-px bg-amber-500 mb-5"></div>
                 <ul class="space-y-3">
-                    @php
-                    $footerServices = ['Énergie & Ressources','Infrastructures','Agriculture','Santé & Médical','Éducation & Sport','Digital & Logistique'];
-                    @endphp
+                    @php $footerServices = App\Models\Service::where('actif', true)->orderBy('ordre')->get(); @endphp
                     @foreach($footerServices as $serv)
                     <li>
-                        <a href="/services" class="text-gray-400 text-sm hover:text-amber-500 transition-colors flex items-center gap-2 group">
+                        <a href="{{ route('services.show', $serv->slug) }}" class="text-gray-400 text-sm hover:text-amber-500 transition-colors flex items-center gap-2 group">
                             <span class="w-1 h-1 rounded-full bg-amber-500 opacity-50 group-hover:opacity-100"></span>
-                            {{ $serv }}
+                            {{ $serv->title }}
                         </a>
                     </li>
                     @endforeach
@@ -74,35 +53,22 @@
                 <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Navigation</h4>
                 <div class="w-8 h-px bg-amber-500 mb-5"></div>
                 <ul class="space-y-3">
-                    @php
-                    $footerNav = [
-                        ['href' => '/',              'label' => 'Accueil'],
-                        ['href' => '/about',         'label' => 'À propos'],
-                        ['href' => '/projects',      'label' => 'Projets'],
-                        ['href' => '/services',      'label' => 'Services'],
-                        ['href' => '/experts',       'label' => 'Experts'],
-                        ['href' => '/blog',          'label' => 'Blog & Actualités'],
-                        ['href' => '/contact',       'label' => 'Contact'],
-                        ['href' => '/privacy-policy', 'label' => 'Confidentialité'],
-                    ];
-                    @endphp
-                    @foreach($footerNav as $link)
-                    <li>
-                        <a href="{{ $link['href'] }}" class="text-gray-400 text-sm hover:text-amber-500 transition-colors flex items-center gap-2 group">
-                            <span class="w-1 h-1 rounded-full bg-amber-500 opacity-50 group-hover:opacity-100"></span>
-                            {{ $link['label'] }}
-                        </a>
-                    </li>
-                    @endforeach
+                    <li><a href="{{ route('welcome') }}" class="text-gray-400 text-sm hover:text-amber-500 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-amber-500 opacity-50 group-hover:opacity-100"></span>Accueil</a></li>
+                    <li><a href="{{ route('about') }}" class="text-gray-400 text-sm hover:text-amber-500 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-amber-500 opacity-50 group-hover:opacity-100"></span>À propos</a></li>
+                    <li><a href="{{ route('projects.index') }}" class="text-gray-400 text-sm hover:text-amber-500 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-amber-500 opacity-50 group-hover:opacity-100"></span>Projets</a></li>
+                    <li><a href="{{ route('services') }}" class="text-gray-400 text-sm hover:text-amber-500 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-amber-500 opacity-50 group-hover:opacity-100"></span>Services</a></li>
+                    <li><a href="{{ route('experts.index') }}" class="text-gray-400 text-sm hover:text-amber-500 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-amber-500 opacity-50 group-hover:opacity-100"></span>Experts</a></li>
+                    <li><a href="{{ route('blog.index') }}" class="text-gray-400 text-sm hover:text-amber-500 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-amber-500 opacity-50 group-hover:opacity-100"></span>Blog & Actualités</a></li>
+                    <li><a href="{{ route('contact') }}" class="text-gray-400 text-sm hover:text-amber-500 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-amber-500 opacity-50 group-hover:opacity-100"></span>Contact</a></li>
+                    <li><a href="{{ route('privacy') }}" class="text-gray-400 text-sm hover:text-amber-500 transition-colors flex items-center gap-2 group"><span class="w-1 h-1 rounded-full bg-amber-500 opacity-50 group-hover:opacity-100"></span>Confidentialité</a></li>
                 </ul>
             </div>
 
-            {{-- Colonne 4 : Contact + Carte --}}
+            {{-- Colonne 4 : Contact --}}
             <div>
                 <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Contact</h4>
                 <div class="w-8 h-px bg-amber-500 mb-5"></div>
                 <div class="space-y-4">
-                    {{-- Adresse --}}
                     <div class="flex items-start gap-3">
                         <div class="w-8 h-8 flex-shrink-0 rounded-md bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
                             <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -115,7 +81,6 @@
                             <p class="text-gray-500 text-xs mt-0.5">Afrique de l'Ouest</p>
                         </div>
                     </div>
-                    {{-- Téléphone --}}
                     <div class="flex items-center gap-3">
                         <div class="w-8 h-8 flex-shrink-0 rounded-md bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
                             <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -124,7 +89,6 @@
                         </div>
                         <a href="tel:+221781792510" class="text-white text-sm hover:text-amber-500 transition-colors">+221 78 179 25 10</a>
                     </div>
-                    {{-- Email --}}
                     <div class="flex items-center gap-3">
                         <div class="w-8 h-8 flex-shrink-0 rounded-md bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
                             <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -135,7 +99,6 @@
                     </div>
                 </div>
 
-                {{-- Badge Certification --}}
                 <div class="mt-6 p-4 bg-amber-500/5 border border-amber-500/20 rounded-lg">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-md bg-amber-500 flex items-center justify-center">
@@ -154,7 +117,6 @@
         </div>
     </div>
 
-    {{-- Tagline band --}}
     <div class="border-t border-white/5 border-b border-white/5">
         <div class="max-w-[1440px] mx-auto px-6 lg:px-12 py-4">
             <p class="text-center text-gray-500 text-xs uppercase tracking-wider">
@@ -163,7 +125,6 @@
         </div>
     </div>
 
-    {{-- Copyright --}}
     <div class="max-w-[1440px] mx-auto px-6 lg:px-12 py-6">
         <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
             <p class="text-gray-500 text-xs">
@@ -172,12 +133,11 @@
             <div class="flex items-center gap-1">
                 <span class="text-gray-500 text-xs">Conçu avec</span>
                 <span class="text-amber-500 text-xs">◆</span>
-                <span class="text-gray-500 text-xs">pour l'excellence africaine</span>
+                <span class="text-gray-500 text-xs">pour l'excellence africaine by RO2-Services</span>
             </div>
         </div>
     </div>
 
-    {{-- Bande gold inférieure --}}
     <div class="h-px bg-gradient-to-r from-transparent via-amber-500 to-transparent"></div>
 
 </footer>
